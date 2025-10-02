@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:practice_app/views/register_view.dart';
+import 'dart:developer' as devtools;
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -29,7 +29,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login'),),
+      appBar: AppBar(title: Text('Login')),
       body: Column(
         children: [
           TextField(
@@ -40,9 +40,7 @@ class _LoginViewState extends State<LoginView> {
           ),
           TextField(
             controller: _password,
-            decoration: InputDecoration(
-              hint: Text('enter your password'),
-            ),
+            decoration: InputDecoration(hint: Text('enter your password')),
             obscureText: true,
             enableSuggestions: false,
             autocorrect: false,
@@ -52,15 +50,18 @@ class _LoginViewState extends State<LoginView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                final userCredential = await FirebaseAuth.instance
+                await FirebaseAuth.instance
                     .signInWithEmailAndPassword(
                   email: email,
                   password: password,
                 );
-                print('credits: $userCredential');
+
+                Navigator.of(
+                  context,
+                ).pushNamedAndRemoveUntil('/notes/', (route) => false);
               } on FirebaseAuthException catch (e) {
-                if(e.code == 'invalid-credential') {
-                  print('e-mail or password not correct');
+                if (e.code == 'invalid-credential') {
+                  devtools.log('e-mail or password not correct');
                 }
               }
             },
@@ -69,13 +70,12 @@ class _LoginViewState extends State<LoginView> {
 
           TextButton(
             onPressed: () {
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/register/',
-                  (route) => false
-              );
+              Navigator.of(
+                context,
+              ).pushNamedAndRemoveUntil('/register/', (route) => false);
             },
             child: Text('Not registered yet? Register here!'),
-          )
+          ),
         ],
       ),
     );
