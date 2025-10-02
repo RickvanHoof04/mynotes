@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer' as devtools;
 
 import 'package:practice_app/constants/routes.dart';
+
+import '../utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -51,9 +52,9 @@ class _LoginViewState extends State<LoginView> {
             onPressed: () async {
               final email = _email.text;
               final password = _password.text;
+
               try {
-                await FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
+                await FirebaseAuth.instance.signInWithEmailAndPassword(
                   email: email,
                   password: password,
                 );
@@ -63,10 +64,18 @@ class _LoginViewState extends State<LoginView> {
                 ).pushNamedAndRemoveUntil(notesRoute, (route) => false);
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'invalid-credential') {
-                  devtools.log('e-mail or password not correct');
+                  await showErrorDialog(context, 'Wrong email or password');
+                } else {
+                  await showErrorDialog(
+                    context,
+                    'an error occurred: ${e.code}',
+                  );
                 }
+              } catch (e) {
+                await showErrorDialog(context, 'Error ${e.toString()}');
               }
             },
+
             child: Text('login'),
           ),
 

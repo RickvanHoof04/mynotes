@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:practice_app/views/email_verification_view.dart';
 import 'package:practice_app/views/login_view.dart';
 import 'package:practice_app/views/register_view.dart';
-import 'dart:developer' as devtools show log;
 
 import 'constants/routes.dart';
 import 'firebase_options.dart';
