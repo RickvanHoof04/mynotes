@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:practice_app/services/auth/auth_exceptions.dart';
 import 'package:practice_app/services/auth/auth_provider.dart';
