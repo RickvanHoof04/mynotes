@@ -63,7 +63,7 @@ void main() {
       expect(user.isEmailVerified, false);
     });
 
-    test( 'login user should be able to get verified', () {
+    test('login user should be able to get verified', () {
       provider.sendEmailVerification();
 
       final user = provider.currentUser;
@@ -118,7 +118,10 @@ class MockAuthProvider implements AuthProvider {
     if (email == 'rhvanhoof@gmail.com') throw InvalidCredentialAuthException();
     if (password == 'randomPasword') throw InvalidCredentialAuthException();
 
-    const user = AuthUser(isEmailVerified: false);
+    const user = AuthUser(
+      isEmailVerified: false,
+      email: 'rrhvanhoof@gmail.com',
+    );
     _user = user;
     return Future.value(user);
   }
@@ -139,7 +142,10 @@ class MockAuthProvider implements AuthProvider {
     final user = _user;
     if (user == null) throw UserNotLoggedInAuthException();
 
-    const newUser = AuthUser(isEmailVerified: true);
+    const newUser = AuthUser(
+      isEmailVerified: true,
+      email: 'rrhvanhoofgmail.com',
+    );
     _user = newUser;
   }
 }
