@@ -103,7 +103,6 @@ class MockAuthProvider implements AuthProvider {
   }
 
   @override
-  // TODO: implement currentUser
   AuthUser? get currentUser => _user;
 
   @override

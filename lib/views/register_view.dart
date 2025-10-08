@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:practice_app/constants/routes.dart';
 import 'package:practice_app/services/auth/auth_service.dart';
@@ -60,6 +62,7 @@ class _RegisterViewState extends State<RegisterView> {
                 );
 
                 AuthService.firebase().sendEmailVerification();
+                
                 Navigator.of(context).pushNamed(verifyEmailRoute);
               } on WeakPasswordAuthException {
                 await showErrorDialog(
