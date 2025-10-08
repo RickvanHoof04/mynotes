@@ -8,7 +8,6 @@ class EmailInUseAuthException implements Exception {}
 
 class InvalidEmailAuthException implements Exception{}
 
-
 //generic
 class GenericAuthException implements Exception{}
 
