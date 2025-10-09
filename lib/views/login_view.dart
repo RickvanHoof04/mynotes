@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 import 'package:practice_app/constants/routes.dart';
 import 'package:practice_app/services/auth/auth_service.dart';
+import 'package:practice_app/utilities/dialogs/error_dialog.dart';
 
 import '../services/auth/auth_exceptions.dart';
-import '../utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -65,21 +65,19 @@ class _LoginViewState extends State<LoginView> {
 
                 final user = AuthService.firebase().currentUser;
 
-                if(user?.isEmailVerified ?? false) {
+                if (user?.isEmailVerified ?? false) {
                   Navigator.of(
                     context,
                   ).pushNamedAndRemoveUntil(notesRoute, (route) => false);
                 } else {
-                  Navigator.of(context).pushNamedAndRemoveUntil(verifyEmailRoute,(route) => false);
+                  Navigator.of(
+                    context,
+                  ).pushNamedAndRemoveUntil(verifyEmailRoute, (route) => false);
                 }
-
               } on InvalidCredentialAuthException {
                 await showErrorDialog(context, 'Wrong Email or password');
               } on GenericAuthException {
-                await showErrorDialog(
-                    context,
-                    'Authentication error!'
-                );
+                await showErrorDialog(context, 'Authentication error!');
               }
             },
             child: Text('login'),

@@ -116,10 +116,12 @@ class NotesService {
       whereArgs: [id],
     );
 
-    if (deletedCount == 0) throw CouldNotDeleteNote();
-
-    _notes.removeWhere((note) => note.id == id);
-    _notesStreamController.add(_notes);
+    if (deletedCount == 0) {
+      throw CouldNotDeleteNote();
+    } else {
+      _notes.removeWhere((note) => note.id == id);
+      _notesStreamController.add(_notes);
+    }
   }
 
   Future<DatabaseNote> createNote({required DatabaseUser owner}) async {
